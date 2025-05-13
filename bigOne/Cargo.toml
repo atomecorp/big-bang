@@ -1,0 +1,55 @@
+[package]
+name = "oslike_ui_bevy_dsl"
+version = "0.1.0"
+edition = "2021"
+authors = ["Votre Nom <email@example.com>"]
+description = "Interface utilisateur modulaire pour OS avec Bevy et DSL Ruby"
+
+[dependencies]
+# Framework principal Bevy
+bevy = "0.12.1"                # Bevy game engine
+taffy = "0.3.19"              # Moteur de layout Flexbox compatible avec Bevy
+
+# Intégration Ruby/DSL
+artichoke = { git = "https://github.com/artichoke/artichoke", branch = "trunk" }  # Interpréteur Ruby en Rust
+
+# Dessin vectoriel et SVG
+resvg = "0.35.0"             # Bibliothèque de rendu SVG
+usvg = "0.35.0"              # Bibliothèque de parsing SVG
+tiny-skia = "0.11.1"         # Bibliothèque de rendu de chemin
+
+# Utilitaires et parsing
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+thiserror = "1.0"
+anyhow = "1.0"
+notify = "6.1.1"             # Observation des fichiers pour hot-reload
+image = "0.24.7"             # Traitement d'images
+
+# Compilation WASM (optionnel)
+# wasm-bindgen = "0.2.89"    # Liaison WebAssembly
+# console_error_panic_hook = "0.1.7"  # Meilleure gestion des panics en WASM
+
+[features]
+default = []
+wasm = ["bevy/bevy_webgl2"]  # Fonctionnalités pour la compilation WASM
+mobile = []                  # Fonctionnalités pour plateformes mobiles
+
+# Optimisations pour la compilation
+[profile.dev]
+opt-level = 1
+
+[profile.dev.package."*"]
+opt-level = 3
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+
+# Métadonnées pour le package
+[package.metadata]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/votre-compte/oslike_ui_bevy_dsl"
+readme = "README.md"
+keywords = ["ui", "bevy", "dsl", "ruby", "os"]
+categories = ["gui", "game-engines"]
